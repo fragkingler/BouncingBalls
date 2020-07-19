@@ -8,6 +8,7 @@ class Ball {
   ArrayList<Ball> others;
   boolean ballKilled = false;
 
+  // Constructor
   Ball(float xIn, float yIn, float diaIn, int idIn, ArrayList othersIn, color colorIn) {
     x = xIn;
     y = yIn;
@@ -17,12 +18,14 @@ class Ball {
     colorBall = colorIn;
   } 
 
+  // Check if this ball collides with other balls
   void collide() {
     for (int i = others.size()-1; i >= 0; i--) {
-      float dx = others.get(i).x - x;
-      float dy = others.get(i).y - y;
+      float dx = others.get(i).x - this.x;
+      float dy = others.get(i).y - this.y;
       float distance = sqrt(dx*dx + dy*dy);
-      // calculate, if ball A collides with ball B
+      
+      // Calculate, if ball A collides with ball B and calculate a new direction
       float minDist = others.get(i).diameter/2 + diameter/2;
       if (distance < minDist) { 
         float angle = atan2(dy, dx);
@@ -38,6 +41,7 @@ class Ball {
     }
   }
 
+  // Move the ball influenced by gravity. Also check the edges of the screen
   void move() {
     vy += gravity;
     x += vx;
@@ -58,23 +62,25 @@ class Ball {
     }
   }
 
+  // Draw the actual ball
   void display() {
     fill(colorBall, 200);
     ellipse(x, y, diameter, diameter);
   }
 
+  // Kill the ball
   boolean kill(int ballToKill) {
-    if (diameter > 0) {
-      diameter -= 10;
+    if (diameter > 0) { // Is the ball existent with a diameter > 0?
+      diameter -= 10; // Decrease diameter
       if (diameter <= 8) {
         diameter = 0;
         ballKilled = true;
-        for (int i = others.size()-1; i >= 0; i--) {
+        for (int i = others.size()-1; i >= 0; i--) { // Remove this ball from the others-arraylist
           if (others.get(i).id == ballToKill)
             others.remove(i);
         }
       }
     }
-    return ballKilled;
+    return ballKilled; // Return if the ball was successfully killed
   }
 }
