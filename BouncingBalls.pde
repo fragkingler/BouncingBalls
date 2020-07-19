@@ -70,10 +70,8 @@ void keyPressed() {
 void keyReleased() {
   if (key == 32) {
     looping = !looping;
-  } else if (key == CODED) { 
-    if (keyCode == ENTER) {
-      balls.add(new Ball(random(width), random(height), random(30, 70), balls.size(), balls, color(random(0, 255), random(0, 255), random(0, 255))));
-    }
+  } else if (keyCode == 10) {
+    balls.add(new Ball(random(width), random(height), random(30, 70), balls.size(), balls, color(random(0, 255), random(0, 255), random(0, 255))));
   }
 }
 
